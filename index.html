@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    
+    <!-- React 및 ReactDOM CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+    <!-- Babel CDN (JSX 변환용) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- AOS (스크롤 애니메이션) -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+    <!-- React Spring (애니메이션 효과) -->
+    <script src="https://unpkg.com/react-spring@9.3.0/web.js"></script>
+
+    <!-- 스타일링 -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .header, .footer {
+            text-align: center;
+            background: #333;
+            color: white;
+            padding: 1.5rem;
+        }
+        .content {
+            text-align: center;
+            padding: 2rem;
+        }
+        .section {
+            padding: 50px;
+            margin-bottom: 20px;
+        }
+        .light-mode {
+            background-color: #fff;
+            color: #333;
+        }
+        .dark-mode {
+            background-color: #333;
+            color: #fff;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 20px;
+            background: #555;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // 애니메이션 및 인터렉티브 컴포넌트
+        const { useState, useEffect } = React;
+        const { useSpring, animated } = window['react-spring'];
+
+        // AOS 초기화
+        useEffect(() => {
+            AOS.init();
+        }, []);
+
+        // 다크/라이트 모드 토글
+        function Header() {
+            const [darkMode, setDarkMode] = useState(false);
+
+            return (
+                <header className={darkMode ? 'dark-mode' : 'light-mode'} style={{ marginBottom: "40px" }}>
+                    <h1>My Portfolio</h1>
+                    <button onClick={() => setDarkMode(!darkMode)}>
+                        {darkMode ? 'Light Mode' : 'Dark Mode'}
+                    </button>
+                </header>
+            );
+        }
+
+        // 소개 컴포넌트
+        function About() {
+            const animation = useSpring({
+                opacity: 1,
+                from: { opacity: 0 },
+                delay: 200,
+                config: { duration: 1500 }
+            });
+
+            return (
+                <animated.section className="section" style={animation} data-aos="fade-up">
+                    <h2>안녕하세요! 저는 [이름]입니다.</h2>
+                    <p>웹 개발을 좋아하는 프론트엔드 개발자입니다. 다양한 기술을 배우고 적용하는 것에 큰 열정을 가지고 있습니다.</p>
+                </animated.section>
+            );
+        }
+
+        // 프로젝트 컴포넌트
+        function Projects() {
+            return (
+                <section className="section" data-aos="fade-up">
+                    <h2>프로젝트</h2>
+                    <div>
+                        <h3>프로젝트 1</h3>
+                        <p>이 프로젝트는 웹 개발 관련 기술을 적용하여 만든 멋진 웹 애플리케이션입니다.</p>
+                    </div>
+                    <div>
+                        <h3>프로젝트 2</h3>
+                        <p>이 프로젝트는 모바일과 데스크탑에 모두 적합한 반응형 디자인을 포함합니다.</p>
+                    </div>
+                </section>
+            );
+        }
+
+        // 연락처 컴포넌트
+        function Contact() {
+            return (
+                <section className="section" data-aos="fade-up">
+                    <h2>연락하기</h2>
+                    <p>Email: myemail@example.com</p>
+                    <p>GitHub: <a href="https://github.com/mygithub" target="_blank">github.com/mygithub</a></p>
+                </section>
+            );
+        }
+
+        // App 컴포넌트
+        function App() {
+            return (
+                <div>
+                    <Header />
+                    <div className="content">
+                        <About />
+                        <Projects />
+                        <Contact />
+                    </div>
+                    <footer className="footer">
+                        <p>© 2025 My Portfolio</p>
+                    </footer>
+                </div>
+            );
+        }
+
+        // ReactDOM을 사용하여 렌더링
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
