@@ -108,31 +108,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // 연락처 복사 기능
-    const copyToClipboard = (text, message) => {
-        navigator.clipboard.writeText(text)
-            .then(() => alert(message))
-            .catch(err => {
+    function copyToClipboard(text, message) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert(message);
+            }).catch(err => {
                 console.error('복사 실패:', err);
-                prompt('복사할 내용:', text);
             });
-    };
+        }
 
-    const phoneLink = document.getElementById('phoneLink');
-    const emailLink = document.getElementById('emailLink');
-
-    if (phoneLink) {
-        phoneLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            copyToClipboard('010-8430-0753', '전화번호가 복사되었습니다: 010-8430-0753');
+        document.getElementById("phoneLink").addEventListener("click", function() {
+            copyToClipboard("010-8430-0753", "전화번호가 복사되었습니다.");
         });
-    }
 
-    if (emailLink) {
-        emailLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            copyToClipboard('bjhcoding@naver.com', '이메일이 복사되었습니다: bjhcoding@naver.com');
+        document.getElementById("emailLink").addEventListener("click", function() {
+            copyToClipboard("bjhcoding@naver.com", "이메일이 복사되었습니다.");
         });
-    }
 
     // 폼 제출 처리
     const emailForm = document.getElementById('emailForm');
