@@ -3,157 +3,1168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
-    
-    <!-- React 및 ReactDOM CDN -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-
-    <!-- Babel CDN (JSX 변환용) -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-    <!-- AOS (스크롤 애니메이션) -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-
-    <!-- React Spring CDN (애니메이션 효과) -->
-    <script src="https://cdn.skypack.dev/react-spring"></script>
-
-    <!-- 스타일링 -->
+    <title>개발자 포트폴리오 | 김개발</title>
+    <!-- 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS 라이브러리 -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- CSS -->
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: #fff;
+            --nav-bg: rgba(255, 255, 255, 0.9);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            --primary-color: #4895ef;
+            --secondary-color: #4361ee;
+            --text-color: #f8f9fa;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --nav-bg: rgba(30, 30, 30, 0.9);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            box-sizing: border-box;
         }
-        .header, .footer {
+
+        body {
+            font-family: 'Noto Sans KR', 'Roboto', sans-serif;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: var(--transition);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 공통 스타일 */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
             text-align: center;
-            background: #333;
-            color: white;
-            padding: 1.5rem;
         }
-        .content {
-            text-align: center;
-            padding: 2rem;
-        }
-        .section {
-            padding: 50px;
+
+        h3 {
+            font-size: 1.8rem;
             margin-bottom: 20px;
         }
-        .light-mode {
-            background-color: #fff;
-            color: #333;
+
+        p {
+            margin-bottom: 15px;
         }
-        .dark-mode {
-            background-color: #333;
-            color: #fff;
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: var(--transition);
         }
-        button {
-            padding: 10px 20px;
-            margin-top: 20px;
-            background: #555;
+
+        a:hover {
+            color: var(--secondary-color);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--primary-color);
             color: white;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: var(--transition);
             border: none;
-            border-radius: 5px;
             cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* 헤더 & 네비게이션 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: var(--transition);
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-menu li {
+            margin-left: 30px;
+        }
+
+        .nav-menu a {
+            color: var(--text-color);
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* 풀스크린 네비게이션 */
+        .fullscreen-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            z-index: 1050;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .fullscreen-nav.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .fullscreen-nav ul {
+            list-style: none;
+            text-align: center;
+        }
+
+        .fullscreen-nav li {
+            margin: 30px 0;
+        }
+
+        .fullscreen-nav a {
+            color: var(--text-color);
+            font-size: 2rem;
+            font-weight: 700;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .fullscreen-nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 2rem;
+            color: var(--text-color);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* 히어로 섹션 */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .typing-text {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .hero-image {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50%;
+            max-width: 600px;
+            z-index: 1;
+        }
+
+        .social-links {
+            display: flex;
+            margin-top: 30px;
+        }
+
+        .social-links a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary-color);
+            margin-right: 15px;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        /* 파라랙스 배경 */
+        .parallax-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            opacity: 0.1;
+        }
+
+        /* 소개 섹션 */
+        #about {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            margin: 50px auto;
+            box-shadow: var(--shadow);
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .about-image img {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .skill {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary-color);
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* 프로젝트 섹션 */
+        #projects {
+            background-color: var(--bg-color);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+
+        .project-info {
+            padding: 25px;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .tech {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary-color);
+            padding: 5px 10px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+
+        /* 경력 섹션 */
+        #experience {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            margin: 50px auto;
+            box-shadow: var(--shadow);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background-color: var(--primary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .timeline-item:nth-child(odd) {
+            padding-right: 50%;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            padding-left: 50%;
+            text-align: left;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            border: 3px solid var(--card-bg);
+        }
+
+        .timeline-date {
+            display: inline-block;
+            padding: 5px 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .timeline-content {
+            background-color: var(--bg-color);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        /* 연락처 섹션 */
+        #contact {
+            background-color: var(--bg-color);
+        }
+
+        .contact-container {
+            display: flex;
+            gap: 50px;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            margin-right: 15px;
+        }
+
+        .contact-form {
+            flex: 1;
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* 푸터 */
+        footer {
+            background-color: var(--card-bg);
+            padding: 30px 0;
+            text-align: center;
+            box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            margin: 20px 0;
+        }
+
+        .footer-links a {
+            margin: 0 15px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .copyright {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        .visitor-count {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* 다크 모드 토글 */
+        .theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            border: none;
+            font-size: 1.2rem;
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero-image {
+                display: none;
+            }
+
+            .contact-container {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                padding-left: 70px;
+                padding-right: 0;
+                text-align: left;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            section {
+                padding: 70px 0;
+            }
+
+            h2 {
+                font-size: 2rem;
+                margin-bottom: 40px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn {
+                padding: 10px 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="root"></div>
+    <!-- 헤더 -->
+    <header>
+        <div class="container header-inner">
+            <a href="#" class="logo">KDev</a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#hero">홈</a></li>
+                <li><a href="#about">소개</a></li>
+                <li><a href="#projects">프로젝트</a></li>
+                <li><a href="#experience">경력</a></li>
+                <li><a href="#contact">연락처</a></li>
+            </ul>
+        </div>
+    </header>
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
+    <!-- 풀스크린 네비게이션 -->
+    <div class="fullscreen-nav" id="fullscreenNav">
+        <button class="close-btn" id="closeNav">
+            <i class="fas fa-times"></i>
+        </button>
+        <ul>
+            <li><a href="#hero">홈</a></li>
+            <li><a href="#about">소개</a></li>
+            <li><a href="#projects">프로젝트</a></li>
+            <li><a href="#experience">경력</a></li>
+            <li><a href="#contact">연락처</a></li>
+        </ul>
+    </div>
 
-        // react-spring에서 useSpring과 animated를 가져옵니다.
-        const { useSpring, animated } = window['react-spring'];
+    <!-- 히어로 섹션 -->
+    <section id="hero">
+        <div class="parallax-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>안녕하세요, <span class="typing-text"></span></h1>
+                <p>풀스택 개발자 김개발입니다. 사용자 중심의 혁신적인 웹 애플리케이션을 개발하는 것을 사랑합니다.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+                <a href="#contact" class="btn">연락하기</a>
+            </div>
+            <div class="hero-image">
+                <div id="lottie-animation" style="width: 100%; height: 100%;"></div>
+            </div>
+        </div>
+    </section>
 
-        // AOS 초기화
-        useEffect(() => {
-            AOS.init();
-        }, []);
+    <!-- 소개 섹션 -->
+    <section id="about" data-aos="fade-up">
+        <div class="container">
+            <h2>저에 대해</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>프론트엔드 & 백엔드 개발자</h3>
+                    <p>5년 이상의 경력을 가진 풀스택 개발자로서 다양한 프로젝트를 성공적으로 수행해왔습니다. 깔끔하고 효율적인 코드 작성을 중요시하며, 최신 기술 트렌드를 따라가기 위해 꾸준히 학습하고 있습니다.</p>
+                    <p>문제 해결을 즐기며, 복잡한 요구사항도 사용자 친화적인 솔루션으로 구현하는 것을 목표로 합니다. 팀워크를 중요시하며, 원활한 커뮤니케이션을 통해 프로젝트를 성공적으로 이끌어냅니다.</p>
+                    
+                    <div class="skills">
+                        <span class="skill">JavaScript</span>
+                        <span class="skill">TypeScript</span>
+                        <span class="skill">React</span>
+                        <span class="skill">Node.js</span>
+                        <span class="skill">Express</span>
+                        <span class="skill">MongoDB</span>
+                        <span class="skill">PostgreSQL</span>
+                        <span class="skill">GraphQL</span>
+                        <span class="skill">Docker</span>
+                        <span class="skill">AWS</span>
+                    </div>
+                </div>
+                <div class="about-image" data-aos="fade-left">
+                    <img src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="개발자 이미지">
+                </div>
+            </div>
+        </div>
+    </section>
 
-        // 다크/라이트 모드 토글
-        function Header() {
-            const [darkMode, setDarkMode] = useState(false);
+    <!-- 프로젝트 섹션 -->
+    <section id="projects">
+        <div class="container">
+            <h2 data-aos="fade-up">프로젝트</h2>
+            <div class="projects-grid">
+                <!-- 프로젝트 1 -->
+                <div class="project-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="프로젝트 1">
+                    </div>
+                    <div class="project-info">
+                        <h3>이커머스 플랫폼</h3>
+                        <div class="project-tech">
+                            <span class="tech">React</span>
+                            <span class="tech">Node.js</span>
+                            <span class="tech">MongoDB</span>
+                            <span class="tech">Redux</span>
+                        </div>
+                        <p>전체적인 쇼핑 경험을 혁신하는 모던한 이커머스 플랫폼. 실시간 재고 관리, 개인화 추천 시스템, 안전한 결제 프로세스를 구현했습니다.</p>
+                        <a href="#" class="btn">자세히 보기</a>
+                    </div>
+                </div>
 
-            return (
-                <header className={darkMode ? 'dark-mode' : 'light-mode'} style={{ marginBottom: "40px" }}>
-                    <h1>My Portfolio</h1>
-                    <button onClick={() => setDarkMode(!darkMode)}>
-                        {darkMode ? 'Light Mode' : 'Dark Mode'}
-                    </button>
-                </header>
-            );
-        }
+                <!-- 프로젝트 2 -->
+                <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="프로젝트 2">
+                    </div>
+                    <div class="project-info">
+                        <h3>태스크 관리 앱</h3>
+                        <div class="project-tech">
+                            <span class="tech">Vue.js</span>
+                            <span class="tech">Firebase</span>
+                            <span class="tech">Vuex</span>
+                        </div>
+                        <p>팀 협업을 위한 직관적인 태스크 관리 애플리케이션. 실시간 업데이트, 드래그 앤 드롭 인터페이스, 사용자 친화적인 디자인을 특징으로 합니다.</p>
+                        <a href="#" class="btn">자세히 보기</a>
+                    </div>
+                </div>
 
-        // 소개 컴포넌트
-        function About() {
-            // useSpring을 사용하여 애니메이션 효과 추가
-            const animation = useSpring({
-                opacity: 1,
-                from: { opacity: 0 },
-                delay: 200,
-                config: { duration: 1500 }
+                <!-- 프로젝트 3 -->
+                <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="프로젝트 3">
+                    </div>
+                    <div class="project-info">
+                        <h3>헬스케어 대시보드</h3>
+                        <div class="project-tech">
+                            <span class="tech">Angular</span>
+                            <span class="tech">D3.js</span>
+                            <span class="tech">Python</span>
+                            <span class="tech">Flask</span>
+                        </div>
+                        <p>의료 데이터를 시각화하는 대시보드 시스템. 복잡한 환자 데이터를 이해하기 쉬운 차트와 그래프로 변환하여 의사 결정을 지원합니다.</p>
+                        <a href="#" class="btn">자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 경력 섹션 -->
+    <section id="experience" data-aos="fade-up">
+        <div class="container">
+            <h2>경력</h2>
+            <div class="timeline">
+                <!-- 경력 1 -->
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2021 - 현재</div>
+                    <div class="timeline-content">
+                        <h3>선임 개발자</h3>
+                        <h4>테크노 솔루션즈</h4>
+                        <p>프론트엔드 아키텍처 설계 및 주요 기능 개발을 주도했습니다. 팀 리더로서 개발 프로세스 개선과 멘토링을 수행했으며, 성능 최적화를 통해 페이지 로딩 시간을 40% 단축했습니다.</p>
+                    </div>
+                </div>
+
+                <!-- 경력 2 -->
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2018 - 2021</div>
+                    <div class="timeline-content">
+                        <h3>소프트웨어 엔지니어</h3>
+                        <h4>웹크래프트</h4>
+                        <p>다양한 클라이언트 프로젝트에서 백엔드 API 개발과 데이터베이스 설계를 담당했습니다. 마이크로서비스 아키텍처 구현과 CI/CD 파이프라인 구축에 기여했습니다.</p>
+                    </div>
+                </div>
+
+                <!-- 경력 3 -->
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2016 - 2018</div>
+                    <div class="timeline-content">
+                        <h3>주니어 개발자</h3>
+                        <h4>디지털 이노베이션</h4>
+                        <p>웹 애플리케이션 개발과 유지보수를 담당하며 다양한 기술 스택을 학습하고 적용했습니다. 코드 리뷰 문화를 도입하여 팀의 코드 품질을 향상시켰습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 연락처 섹션 -->
+    <section id="contact" data-aos="fade-up">
+        <div class="container">
+            <h2>연락하기</h2>
+            <div class="contact-container">
+                <div class="contact-info" data-aos="fade-right">
+                    <h3>연락처 정보</h3>
+                    <p>프로젝트 문의나 채용 제안이 있으시면 아래 연락처로 연락주세요. 빠르게 답변드리겠습니다.</p>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4>이메일</h4>
+                            <p>kdev@example.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h4>전화</h4>
+                            <p>+82 10-1234-5678</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h4>위치</h4>
+                            <p>서울특별시 강남구 테헤란로</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form" data-aos="fade-left">
+                    <form id="emailForm">
+                        <div class="form-group">
+                            <label for="name">이름</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">이메일</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">제목</label>
+                            <input type="text" id="subject" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">메시지</label>
+                            <textarea id="message" class="form-control" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn">메시지 보내기</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <a href="#" class="logo">KDev</a>
+                <div class="footer-links">
+                    <a href="#hero">홈</a>
+                    <a href="#about">소개</a>
+                    <a href="#projects">프로젝트</a>
+                    <a href="#experience">경력</a>
+                    <a href="#contact">연락처</a>
+                </div>
+                <p class="copyright">© 2023 김개발. 모든 권리 보유.</p>
+                <p class="visitor-count">방문자 수: <span id="visitorCount">0</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 다크 모드 토글 버튼 -->
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- 스크롤 업 버튼 -->
+    <button class="theme-toggle" id="scrollToTop" style="bottom: 90px; right: 30px; display: none;">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript 라이브러리 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.10.2/lottie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- 메인 JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // AOS 초기화
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: false
             });
 
-            return (
-                <animated.section className="section" style={animation} data-aos="fade-up">
-                    <h2>안녕하세요! 저는 [이름]입니다.</h2>
-                    <p>웹 개발을 좋아하는 프론트엔드 개발자입니다. 다양한 기술을 배우고 적용하는 것에 큰 열정을 가지고 있습니다.</p>
-                </animated.section>
-            );
-        }
+            // 타이핑 효과
+            const typed = new Typed('.typing-text', {
+                strings: ['개발자', '프로그래머', '풀스택 엔지니어', '김개발'],
+                typeSpeed: 100,
+                backSpeed: 60,
+                loop: true
+            });
 
-        // 프로젝트 컴포넌트
-        function Projects() {
-            return (
-                <section className="section" data-aos="fade-up">
-                    <h2>프로젝트</h2>
-                    <div>
-                        <h3>프로젝트 1</h3>
-                        <p>이 프로젝트는 웹 개발 관련 기술을 적용하여 만든 멋진 웹 애플리케이션입니다.</p>
-                    </div>
-                    <div>
-                        <h3>프로젝트 2</h3>
-                        <p>이 프로젝트는 모바일과 데스크탑에 모두 적합한 반응형 디자인을 포함합니다.</p>
-                    </div>
-                </section>
-            );
-        }
+            // Lottie 애니메이션
+            const animationContainer = document.getElementById('lottie-animation');
+            lottie.loadAnimation({
+                container: animationContainer,
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                path: 'https://assets5.lottiefiles.com/packages/lf20_iv4dsqx3.json' // 개발자 애니메이션 JSON
+            });
 
-        // 연락처 컴포넌트
-        function Contact() {
-            return (
-                <section className="section" data-aos="fade-up">
-                    <h2>연락하기</h2>
-                    <p>Email: myemail@example.com</p>
-                    <p>GitHub: <a href="https://github.com/mygithub" target="_blank">github.com/mygithub</a></p>
-                </section>
-            );
-        }
+            // 풀스크린 네비게이션
+            const navToggle = document.getElementById('navToggle');
+            const fullscreenNav = document.getElementById('fullscreenNav');
+            const closeNav = document.getElementById('closeNav');
 
-        // App 컴포넌트
-        function App() {
-            return (
-                <div>
-                    <Header />
-                    <div className="content">
-                        <About />
-                        <Projects />
-                        <Contact />
-                    </div>
-                    <footer className="footer">
-                        <p>© 2025 My Portfolio</p>
-                    </footer>
-                </div>
-            );
-        }
+            navToggle.addEventListener('click', function() {
+                fullscreenNav.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
 
-        // ReactDOM을 사용하여 렌더링
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+            closeNav.addEventListener('click', function() {
+                fullscreenNav.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+
+            // 다크 모드 토글
+            const themeToggle = document.getElementById('themeToggle');
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+            // OS 설정 확인
+            if (prefersDarkScheme.matches) {
+                document.body.classList.add('dark-mode');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+
+            // 로컬 스토리지 확인
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else if (currentTheme === 'light') {
+                document.body.classList.remove('dark-mode');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+
+            // 버튼 클릭 시 토글
+            themeToggle.addEventListener('click', function() {
+                if (document.body.classList.contains('dark-mode')) {
+                    document.body.classList.remove('dark-mode');
+                    localStorage.setItem('theme', 'light');
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                } else {
+                    document.body.classList.add('dark-mode');
+                    localStorage.setItem('theme', 'dark');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                }
+            });
+
+            // 방문자 카운트
+            const visitorCount = document.getElementById('visitorCount');
+            let count = localStorage.getItem('visitorCount');
+
+            if (!count) {
+                count = 0;
+            } else {
+                count = parseInt(count);
+            }
+
+            count++;
+            localStorage.setItem('visitorCount', count);
+            visitorCount.textContent = count;
+
+            // 이메일 전송
+            const emailForm = document.getElementById('emailForm');
+            emailForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const subject = document.getElementById('subject').value;
+                const message = document.getElementById('message').value;
+                
+                // 실제로는 서버 측 스크립트로 이메일을 전송해야 합니다.
+                // 여기서는 콘솔에만 출력합니다.
+                console.log('이메일 전송 시도:', { name, email, subject, message });
+                
+                // Formspree 같은 서비스를 사용할 수 있습니다.
+                // axios.post('https://formspree.io/f/your-form-id', {
+                //     name: name,
+                //     email: email,
+                //     subject: subject,
+                //     message: message
+                // })
+                // .then(response => {
+                //     alert('메시지가 성공적으로 전송되었습니다!');
+                //     emailForm.reset();
+                // })
+                // .catch(error => {
+                //     alert('메시지 전송에 실패했습니다. 다시 시도해주세요.');
+                // });
+                
+                // 데모용 알림
+                alert('메시지가 성공적으로 전송되었습니다! (데모)');
+                emailForm.reset();
+            });
+
+            // 스크롤 업 버튼
+            const scrollToTopBtn = document.getElementById('scrollToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.style.display = 'flex';
+                } else {
+                    scrollToTopBtn.style.display = 'none';
+                }
+            });
+            
+            scrollToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // GSAP 애니메이션
+            gsap.registerPlugin(ScrollTrigger);
+
+            // 헤더 스크롤 효과
+            gsap.to("header", {
+                backgroundColor: "var(--nav-bg)",
+                backdropFilter: "blur(10px)",
+                boxShadow: "var(--shadow)",
+                duration: 0.5,
+                scrollTrigger: {
+                    trigger: "#hero",
+                    start: "bottom top",
+                    toggleActions: "play none none reverse"
+                }
+            });
+
+            // 파라랙스 효과
+            gsap.to(".parallax-bg", {
+                y: 100,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "#hero",
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true
+                }
+            });
+
+            // 섹션 애니메이션
+            gsap.utils.toArray("section").forEach(section => {
+                gsap.from(section, {
+                    opacity: 0,
+                    y: 50,
+                    duration: 1,
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>
