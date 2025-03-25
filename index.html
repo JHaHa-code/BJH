@@ -64,16 +64,13 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        // 애니메이션 및 인터렉티브 컴포넌트
         const { useState, useEffect } = React;
         const { useSpring, animated } = window['react-spring'];
 
-        // AOS 초기화
         useEffect(() => {
             AOS.init();
         }, []);
 
-        // 다크/라이트 모드 토글
         function Header() {
             const [darkMode, setDarkMode] = useState(false);
 
@@ -87,7 +84,6 @@
             );
         }
 
-        // 소개 컴포넌트
         function About() {
             const animation = useSpring({
                 opacity: 1,
@@ -104,7 +100,6 @@
             );
         }
 
-        // 프로젝트 컴포넌트
         function Projects() {
             return (
                 <section className="section" data-aos="fade-up">
@@ -121,7 +116,6 @@
             );
         }
 
-        // 연락처 컴포넌트
         function Contact() {
             return (
                 <section className="section" data-aos="fade-up">
@@ -132,7 +126,6 @@
             );
         }
 
-        // App 컴포넌트
         function App() {
             return (
                 <div>
@@ -149,7 +142,6 @@
             );
         }
 
-        // ReactDOM을 사용하여 렌더링
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
