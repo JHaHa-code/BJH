@@ -17,12 +17,12 @@ document.addEventListener('DOMContentLoaded', function() {
     try {
         if (document.querySelector('.typing-text')) {
             const typed = new Typed('.typing-text', {
-                strings: ['배재현', '개발자', '프로그래머', '풀스택 엔지니어'],
+                strings: ['코더', '프로그래머', '그리고 학생', '배재현입니다.'],
                 typeSpeed: 100,
                 backSpeed: 60,
                 loop: true,
                 onStringTyped: (arrayPos, self) => {
-                    if (self.strings[arrayPos] === '배재현') {
+                    if (self.strings[arrayPos] === '배재현입니다.') {
                         self.stop();
                         setTimeout(() => self.start(), 2000);
                     }
