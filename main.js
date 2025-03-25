@@ -1,14 +1,23 @@
-// 문서 로드 후 실행되는 초기화 함수
 document.addEventListener('DOMContentLoaded', function() {
-    // AOS 초기화 (애니메이션 라이브러리)
-    AOS.init({
-        duration: 800,
-        easing: 'ease-in-out',
-        once: false
-    });
+    // AOS 초기화 (스크롤 애니메이션)
+    if (typeof AOS !== 'undefined') {
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: false,
+            offset: 120
+        });
+    } else {
+        console.log('AOS 라이브러리가 로드되지 않았습니다.');
+        // AOS 대체 애니메이션
+        document.querySelectorAll('[data-aos]').forEach(el => {
+            el.style.opacity = 1;
+            el.style.transform = 'none';
+        });
+    }
 
-    // 타이핑 효과 설정
-    if (document.querySelector('.typing-text')) {
+    // 타이핑 효과 초기화
+    try {
         const typed = new Typed('.typing-text', {
             strings: ['배재현', '개발자', '프로그래머', '풀스택 엔지니어'],
             typeSpeed: 100,
@@ -17,26 +26,15 @@ document.addEventListener('DOMContentLoaded', function() {
             onStringTyped: (arrayPos, self) => {
                 if (self.strings[arrayPos] === '배재현') {
                     self.stop();
-                    setTimeout(() => self.start(), 2000);
+                    setTimeout(() => {
+                        self.start();
+                    }, 2000);
                 }
             }
         });
-    }
-
-    // Lottie 애니메이션 로드 (선택적)
-    const animationContainer = document.getElementById('lottie-animation');
-    if (animationContainer) {
-        try {
-            lottie.loadAnimation({
-                container: animationContainer,
-                renderer: 'svg',
-                loop: true,
-                autoplay: true,
-                path: 'https://assets5.lottiefiles.com/packages/lf20_iv4dsqx3.json'
-            });
-        } catch (error) {
-            console.error('Lottie 애니메이션 로드 실패:', error);
-        }
+    } catch (e) {
+        console.error('Typed.js 오류:', e);
+        document.querySelector('.typing-text').textContent = '배재현';
     }
 
     // 풀스크린 네비게이션 토글
@@ -45,24 +43,28 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeNav = document.getElementById('closeNav');
     const navLinks = document.querySelectorAll('.nav-link');
 
-    if (navToggle && fullscreenNav && closeNav) {
-        navToggle.addEventListener('click', () => {
+    if (navToggle && fullscreenNav) {
+        navToggle.addEventListener('click', function() {
             fullscreenNav.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
+    }
 
-        closeNav.addEventListener('click', () => {
+    if (closeNav && fullscreenNav) {
+        closeNav.addEventListener('click', function() {
             fullscreenNav.classList.remove('active');
             document.body.style.overflow = '';
         });
+    }
 
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            if (fullscreenNav) {
                 fullscreenNav.classList.remove('active');
                 document.body.style.overflow = '';
-            });
+            }
         });
-    }
+    });
 
     // 다크 모드 토글
     const themeToggle = document.getElementById('themeToggle');
@@ -72,44 +74,62 @@ document.addEventListener('DOMContentLoaded', function() {
         const setTheme = (isDark) => {
             document.body.classList.toggle('dark-mode', isDark);
             themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            try {
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            } catch (e) {
+                console.log('localStorage 접근 오류:', e);
+            }
         };
 
-        if (localStorage.getItem('theme') === 'dark' || (prefersDarkScheme.matches && !localStorage.getItem('theme'))) {
+        // 초기 테마 설정
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark' || (prefersDarkScheme.matches && !currentTheme)) {
             setTheme(true);
         }
 
-        themeToggle.addEventListener('click', () => {
+        themeToggle.addEventListener('click', function() {
             setTheme(!document.body.classList.contains('dark-mode'));
         });
     }
 
     // 방문자 카운터
-    const visitorCount = document.getElementById('visitorCount');
-    if (visitorCount) {
-        let count = parseInt(localStorage.getItem('visitorCount')) || 0;
-        visitorCount.textContent = ++count;
-        localStorage.setItem('visitorCount', count);
+    try {
+        const visitorCountEl = document.getElementById('visitorCount');
+        if (visitorCountEl) {
+            let count = parseInt(localStorage.getItem('visitorCount')) || 0;
+            count++;
+            visitorCountEl.textContent = count;
+            localStorage.setItem('visitorCount', count);
+        }
+    } catch (e) {
+        console.log('방문자 카운터 오류:', e);
+        const visitorCountEl = document.getElementById('visitorCount');
+        if (visitorCountEl) visitorCountEl.textContent = '100+';
     }
 
     // 연락처 복사 기능
     const copyToClipboard = (text, message) => {
         navigator.clipboard.writeText(text)
             .then(() => alert(message))
-            .catch(err => console.error('복사 실패:', err));
+            .catch(err => {
+                console.error('복사 실패:', err);
+                prompt('복사할 내용:', text);
+            });
     };
 
     const phoneLink = document.getElementById('phoneLink');
     const emailLink = document.getElementById('emailLink');
 
     if (phoneLink) {
-        phoneLink.addEventListener('click', () => {
+        phoneLink.addEventListener('click', function(e) {
+            e.preventDefault();
             copyToClipboard('010-8430-0753', '전화번호가 복사되었습니다: 010-8430-0753');
         });
     }
 
     if (emailLink) {
-        emailLink.addEventListener('click', () => {
+        emailLink.addEventListener('click', function(e) {
+            e.preventDefault();
             copyToClipboard('bjhcoding@naver.com', '이메일이 복사되었습니다: bjhcoding@naver.com');
         });
     }
@@ -119,8 +139,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (emailForm) {
         emailForm.addEventListener('submit', function(e) {
             e.preventDefault();
+            
             const formData = new FormData(this);
-            console.log('폼 데이터:', Object.fromEntries(formData));
+            const formObject = Object.fromEntries(formData.entries());
+            console.log('폼 데이터:', formObject);
+            
             alert('메시지가 성공적으로 전송되었습니다! (데모)');
             this.reset();
         });
@@ -129,17 +152,20 @@ document.addEventListener('DOMContentLoaded', function() {
     // 스크롤 업 버튼
     const scrollToTopBtn = document.getElementById('scrollToTop');
     if (scrollToTopBtn) {
-        window.addEventListener('scroll', () => {
+        window.addEventListener('scroll', function() {
             scrollToTopBtn.classList.toggle('active', window.scrollY > 300);
         });
 
-        scrollToTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        scrollToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
     }
 
     // GSAP 애니메이션 (선택적)
-    if (window.gsap && gsap.registerPlugin) {
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
 
         // 헤더 스크롤 효과
@@ -153,14 +179,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // 파라랙스 효과
+        // 파라랙스 효과 (기존 배경 애니메이션)
         gsap.to(".parallax-bg", {
             y: 100,
             ease: "none",
             scrollTrigger: {
-                scrub: true,
+                trigger: "#hero",
                 start: "top bottom",
-                end: "bottom top"
+                end: "bottom top",
+                scrub: true
             }
         });
 
@@ -172,7 +199,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 duration: 1,
                 scrollTrigger: {
                     trigger: section,
-                    start: "top 80%"
+                    start: "top 80%",
+                    toggleActions: "play none none none"
                 }
             });
         });
