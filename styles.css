@@ -102,6 +102,8 @@ a:hover {
 
 /* 헤더 & 네비게이션 */
 header {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     position: fixed;
     top: 0;
     left: 0;
