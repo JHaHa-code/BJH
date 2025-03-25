@@ -16,8 +16,8 @@
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 
-    <!-- React Spring (애니메이션 효과) -->
-    <script src="https://unpkg.com/react-spring@9.3.0/web.js"></script>
+    <!-- React Spring CDN (애니메이션 효과) -->
+    <script src="https://cdn.skypack.dev/react-spring"></script>
 
     <!-- 스타일링 -->
     <style>
@@ -66,7 +66,7 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // `react-spring` 라이브러리에서 `useSpring`을 가져오기
+        // react-spring에서 useSpring과 animated를 가져옵니다.
         const { useSpring, animated } = window['react-spring'];
 
         // AOS 초기화
@@ -90,6 +90,7 @@
 
         // 소개 컴포넌트
         function About() {
+            // useSpring을 사용하여 애니메이션 효과 추가
             const animation = useSpring({
                 opacity: 1,
                 from: { opacity: 0 },
