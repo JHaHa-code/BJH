@@ -1,16 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log("📢 DOM이 완전히 로드되었습니다.");
 
-    // AOS 초기화
-    if (typeof AOS !== 'undefined') {
-        AOS.init({
-            duration: 800,
-            easing: 'ease-in-out',
-            once: false,
-            offset: 120
-        });
-    }
-
     // 타이핑 효과
     try {
         if (document.querySelector('.typing-text')) {
@@ -109,28 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
             window.scrollTo({ top: 0, behavior: 'smooth' }));
     }
 
-    // 기술 카드 애니메이션
-    const skillCards = document.querySelectorAll('.skill-card');
-    if (skillCards.length > 0) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const progressBar = entry.target.querySelector('.progress-bar');
-                    if (progressBar) {
-                        const width = progressBar.style.width;
-                        progressBar.style.width = '0';
-                        setTimeout(() => {
-                            progressBar.style.width = width;
-                        }, 100);
-                    }
-                }
-            });
-        }, { threshold: 0.5 });
-
-        skillCards.forEach(card => observer.observe(card));
-    }
-
-    // GSAP 애니메이션
+    // GSAP 애니메이션 (패럴랙스 효과만 유지)
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
 
@@ -153,54 +122,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 start: "top bottom",
                 end: "bottom top",
                 scrub: true
-            }
-        });
-
-        // 섹션 진입 애니메이션 (위에서 아래로)
-        gsap.utils.toArray("section").forEach(section => {
-            if (section.id !== 'hero') {
-                gsap.from(section, {
-                    opacity: 0,
-                    y: 100,
-                    duration: 1,
-                    scrollTrigger: {
-                        trigger: section,
-                        start: "top 80%",
-                        toggleActions: "play none none none"
-                    }
-                });
-            }
-        });
-
-        // 아래에서 위로 스크롤할 때 반대 애니메이션
-        ScrollTrigger.create({
-            trigger: "body",
-            start: "top top",
-            end: "max",
-            onUpdate: self => {
-                if (self.direction === -1) { // 위로 스크롤
-                    gsap.utils.toArray("section").forEach(section => {
-                        if (section.id !== 'hero' && self.progress < 0.9) {
-                            gsap.to(section, {
-                                opacity: 0,
-                                y: -100,
-                                duration: 0.5,
-                                ease: "power2.out"
-                            });
-                        }
-                    });
-                } else { // 아래로 스크롤
-                    gsap.utils.toArray("section").forEach(section => {
-                        if (section.id !== 'hero') {
-                            gsap.to(section, {
-                                opacity: 1,
-                                y: 0,
-                                duration: 1,
-                                ease: "power2.out"
-                            });
-                        }
-                    });
-                }
             }
         });
     }
