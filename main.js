@@ -1,4 +1,3 @@
-// main.js
 document.addEventListener('DOMContentLoaded', function() {
     console.log("📢 DOM이 완전히 로드되었습니다.");
 
@@ -16,12 +15,12 @@ document.addEventListener('DOMContentLoaded', function() {
     try {
         if (document.querySelector('.typing-text')) {
             new Typed('.typing-text', {
-                strings: ['코더', '프로그래머', '그리고 학생', '<br>배재현입니다.'],
+                strings: ['코더', '프로그래머', '그리고 학생', '배재현입니다.'],
                 typeSpeed: 100,
                 backSpeed: 60,
                 loop: true,
                 onStringTyped: (arrayPos, self) => {
-                    if (self.strings[arrayPos] === '<br>배재현입니다.') {
+                    if (self.strings[arrayPos] === '배재현입니다.') {
                         self.stop();
                         setTimeout(() => self.start(), 2000);
                     }
@@ -78,25 +77,14 @@ document.addEventListener('DOMContentLoaded', function() {
             setTheme(!document.body.classList.contains('dark-mode')));
     }
 
-    // 기술 스킬 애니메이션
-    const skillItems = document.querySelectorAll('.skill-item');
-    const skillsContainer = document.querySelector('.skills-container');
-    if (skillsContainer) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    skillItems.forEach((item, index) => {
-                        setTimeout(() => {
-                            item.classList.add('show');
-                            const skillLevel = item.querySelector('.skill-level');
-                            skillLevel.style.width = skillLevel.dataset.level + '%';
-                        }, index * 200);
-                    });
-                    observer.unobserve(entry.target);
-                }
+    // 스크롤 힌트 클릭 이벤트
+    const scrollHint = document.querySelector('.scroll-hint');
+    if (scrollHint) {
+        scrollHint.addEventListener('click', () => {
+            document.querySelector('#about').scrollIntoView({ 
+                behavior: 'smooth' 
             });
-        }, { threshold: 0.5 });
-        observer.observe(skillsContainer);
+        });
     }
 
     // 방문자 카운터
@@ -121,10 +109,32 @@ document.addEventListener('DOMContentLoaded', function() {
             window.scrollTo({ top: 0, behavior: 'smooth' }));
     }
 
+    // 기술 카드 애니메이션
+    const skillCards = document.querySelectorAll('.skill-card');
+    if (skillCards.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBar = entry.target.querySelector('.progress-bar');
+                    if (progressBar) {
+                        const width = progressBar.style.width;
+                        progressBar.style.width = '0';
+                        setTimeout(() => {
+                            progressBar.style.width = width;
+                        }, 100);
+                    }
+                }
+            });
+        }, { threshold: 0.5 });
+
+        skillCards.forEach(card => observer.observe(card));
+    }
+
     // GSAP 애니메이션
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
 
+        // 헤더 배경색 변경
         gsap.to("header", {
             backgroundColor: "var(--nav-bg)",
             scrollTrigger: {
@@ -134,6 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
+        // 패럴랙스 배경 효과
         gsap.to(".parallax-bg", {
             y: 100,
             ease: "none",
@@ -145,17 +156,52 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
+        // 섹션 진입 애니메이션 (위에서 아래로)
         gsap.utils.toArray("section").forEach(section => {
-            gsap.from(section, {
-                opacity: 0,
-                y: 50,
-                duration: 1,
-                scrollTrigger: {
-                    trigger: section,
-                    start: "top 80%",
-                    toggleActions: "play none none none"
+            if (section.id !== 'hero') {
+                gsap.from(section, {
+                    opacity: 0,
+                    y: 100,
+                    duration: 1,
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    }
+                });
+            }
+        });
+
+        // 아래에서 위로 스크롤할 때 반대 애니메이션
+        ScrollTrigger.create({
+            trigger: "body",
+            start: "top top",
+            end: "max",
+            onUpdate: self => {
+                if (self.direction === -1) { // 위로 스크롤
+                    gsap.utils.toArray("section").forEach(section => {
+                        if (section.id !== 'hero' && self.progress < 0.9) {
+                            gsap.to(section, {
+                                opacity: 0,
+                                y: -100,
+                                duration: 0.5,
+                                ease: "power2.out"
+                            });
+                        }
+                    });
+                } else { // 아래로 스크롤
+                    gsap.utils.toArray("section").forEach(section => {
+                        if (section.id !== 'hero') {
+                            gsap.to(section, {
+                                opacity: 1,
+                                y: 0,
+                                duration: 1,
+                                ease: "power2.out"
+                            });
+                        }
+                    });
                 }
-            });
+            }
         });
     }
 });
