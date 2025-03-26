@@ -5,12 +5,12 @@ document.addEventListener('DOMContentLoaded', function() {
     try {
         if (document.querySelector('.typing-text')) {
             new Typed('.typing-text', {
-                strings: ['코더', '프로그래머', '그리고 학생', '배재현입니다.'],
+                strings: ['코더', '<br>프로그래머', '<br>그리고 학생', '<br>배재현입니다.'],
                 typeSpeed: 100,
                 backSpeed: 60,
                 loop: true,
                 onStringTyped: (arrayPos, self) => {
-                    if (self.strings[arrayPos] === '배재현입니다.') {
+                    if (self.strings[arrayPos] === '<br>배재현입니다.') {
                         self.stop();
                         setTimeout(() => self.start(), 2000);
                     }
