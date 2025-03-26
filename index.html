@@ -20,7 +20,7 @@
     <!-- AOS 라이브러리 -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- CSS -->
-    <link rel="stylesheet" href="styles.css?v=1.2">
+    <link rel="stylesheet" href="styles.css?v=1.3">
 </head>
 <body>
     <!-- 헤더 -->
@@ -60,12 +60,51 @@
                 <p>안녕하세요!<br>
                 방문해 주셔서 감사합니다.<br>
                 개발자 배재현입니다. 사용자 중심의 웹을 개발합니다.</p>
-            <div class="hero-image">
-                <div class="hero-shape"></div>
+                
+                <!-- 추가된 기술 스킬 부분 -->
+                <div class="skills-animation">
+                    <h3>기술 스킬</h3>
+                    <div class="skills-container">
+                        <div class="skill-item" data-skill="Python">
+                            <span class="skill-name">Python</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-level="85"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-skill="HTML/CSS">
+                            <span class="skill-name">HTML/CSS</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-level="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-skill="JavaScript">
+                            <span class="skill-name">JavaScript</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-level="80"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-skill="Linux Shell">
+                            <span class="skill-name">Linux Shell</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-level="75"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-skill="Dart">
+                            <span class="skill-name">Dart</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-level="70"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 기술 스킬 부분 끝 -->
+                
+                <div class="hero-image">
+                    <div class="hero-shape"></div>
+                </div>
             </div>
         </div>
     </section>
-
 
     <!-- 프로젝트 섹션 -->
     <section id="projects">
@@ -131,13 +170,11 @@
         </div>
     </section>
 
-
     <!-- 푸터 -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <a href="#" class="logo">BJH</a>
-                </div>
                 <p class="copyright">© 2025 BAE JAE HYUN, All right reserved..</p>
                 <p class="visitor-count">방문자 수: <span id="visitorCount">0</span></p>
             </div>
@@ -162,6 +199,6 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <!-- 메인 JavaScript -->
-    <script src="main.js?v=1.2"></script>
+    <script src="main.js?v=1.3"></script>
 </body>
 </html>
