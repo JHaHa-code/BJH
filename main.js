@@ -1,7 +1,8 @@
+// main.js
 document.addEventListener('DOMContentLoaded', function() {
     console.log("📢 DOM이 완전히 로드되었습니다.");
 
-    // ✅ AOS 초기화 (스크롤 애니메이션)
+    // AOS 초기화
     if (typeof AOS !== 'undefined') {
         AOS.init({
             duration: 800,
@@ -9,14 +10,12 @@ document.addEventListener('DOMContentLoaded', function() {
             once: false,
             offset: 120
         });
-    } else {
-        console.warn("⚠️ AOS 라이브러리가 로드되지 않았습니다.");
     }
 
-    // ✅ 타이핑 효과 (Typed.js)
+    // 타이핑 효과
     try {
         if (document.querySelector('.typing-text')) {
-            const typed = new Typed('.typing-text', {
+            new Typed('.typing-text', {
                 strings: ['코더', '프로그래머', '그리고 학생', '<br>배재현입니다.'],
                 typeSpeed: 100,
                 backSpeed: 60,
@@ -30,43 +29,39 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     } catch (e) {
-        console.error("⚠️ Typed.js 오류:", e);
+        console.error("Typed.js 오류:", e);
     }
 
-    // ✅ 풀스크린 네비게이션 토글
+    // 네비게이션 토글
     const navToggle = document.getElementById('navToggle');
     const fullscreenNav = document.getElementById('fullscreenNav');
     const closeNav = document.getElementById('closeNav');
     const navLinks = document.querySelectorAll('.nav-link');
 
     if (navToggle && fullscreenNav) {
-        navToggle.addEventListener('click', function() {
+        navToggle.addEventListener('click', () => {
             fullscreenNav.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
     }
 
     if (closeNav && fullscreenNav) {
-        closeNav.addEventListener('click', function() {
+        closeNav.addEventListener('click', () => {
             fullscreenNav.classList.remove('active');
             document.body.style.overflow = '';
         });
     }
 
     navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            if (fullscreenNav) {
-                fullscreenNav.classList.remove('active');
-                document.body.style.overflow = '';
-            }
+        link.addEventListener('click', () => {
+            fullscreenNav?.classList.remove('active');
+            document.body.style.overflow = '';
         });
     });
 
-    // ✅ 다크 모드 토글
+    // 다크 모드 토글
     const themeToggle = document.getElementById('themeToggle');
     if (themeToggle) {
-        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-
         const setTheme = (isDark) => {
             document.body.classList.toggle('dark-mode', isDark);
             themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
@@ -74,82 +69,64 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'dark' || (prefersDarkScheme.matches && !currentTheme)) {
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
             setTheme(true);
         }
 
-        themeToggle.addEventListener('click', function() {
-            setTheme(!document.body.classList.contains('dark-mode'));
-        });
+        themeToggle.addEventListener('click', () => 
+            setTheme(!document.body.classList.contains('dark-mode')));
     }
 
-    // ✅ 방문자 카운터 (LocalStorage)
+    // 기술 스킬 애니메이션
+    const skillItems = document.querySelectorAll('.skill-item');
+    const skillsContainer = document.querySelector('.skills-container');
+    if (skillsContainer) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    skillItems.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.classList.add('show');
+                            const skillLevel = item.querySelector('.skill-level');
+                            skillLevel.style.width = skillLevel.dataset.level + '%';
+                        }, index * 200);
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        observer.observe(skillsContainer);
+    }
+
+    // 방문자 카운터
     try {
         const visitorCountEl = document.getElementById('visitorCount');
         if (visitorCountEl) {
             let count = parseInt(localStorage.getItem('visitorCount')) || 0;
-            count++;
-            visitorCountEl.textContent = count;
+            visitorCountEl.textContent = ++count;
             localStorage.setItem('visitorCount', count);
         }
     } catch (e) {
-        console.warn("⚠️ 방문자 카운터 오류:", e);
+        console.warn("방문자 카운터 오류:", e);
     }
 
-    // ✅ 연락처 복사 기능
-    function copyToClipboard(text, message) {
-        navigator.clipboard.writeText(text)
-            .then(() => alert(message))
-            .catch(err => console.error("⚠️ 복사 실패:", err));
-    }
-
-    const phoneLink = document.getElementById("phoneLink");
-    if (phoneLink) {
-        phoneLink.addEventListener("click", function() {
-            copyToClipboard("010-8430-0753", "📞 전화번호가 복사되었습니다.");
-        });
-    } else {
-        console.warn("⚠️ phoneLink 요소를 찾을 수 없습니다.");
-    }
-
-    const emailLink = document.getElementById("emailLink");
-    if (emailLink) {
-        emailLink.addEventListener("click", function() {
-            copyToClipboard("bjhcoding@naver.com", "✉️ 이메일이 복사되었습니다.");
-        });
-    } else {
-        console.warn("⚠️ emailLink 요소를 찾을 수 없습니다.");
-    }
-
-    // ✅ 폼 제출 처리
-    const emailForm = document.getElementById('emailForm');
-    if (emailForm) {
-        emailForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('📩 메시지가 성공적으로 전송되었습니다! (데모)');
-            this.reset();
-        });
-    }
-
-    // ✅ 스크롤 업 버튼
+    // 스크롤 업 버튼
     const scrollToTopBtn = document.getElementById('scrollToTop');
     if (scrollToTopBtn) {
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', () => {
             scrollToTopBtn.classList.toggle('active', window.scrollY > 300);
         });
-
-        scrollToTopBtn.addEventListener('click', function() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        scrollToTopBtn.addEventListener('click', () => 
+            window.scrollTo({ top: 0, behavior: 'smooth' }));
     }
 
-    // ✅ GSAP 애니메이션
+    // GSAP 애니메이션
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
 
         gsap.to("header", {
             backgroundColor: "var(--nav-bg)",
-            backdropFilter: "blur(10px)",
             scrollTrigger: {
                 trigger: "#hero",
                 start: "bottom top",
@@ -180,7 +157,5 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         });
-    } else {
-        console.warn("⚠️ GSAP 라이브러리가 로드되지 않았습니다.");
     }
 });
