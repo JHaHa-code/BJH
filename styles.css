@@ -410,48 +410,27 @@ header {
     margin-top: 40px;
 }
 
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+.skills-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
     margin-top: 20px;
 }
 
-.skill-card {
-    background-color: var(--bg-color);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
+.skill-tag {
+    background-color: rgba(67, 97, 238, 0.1);
+    color: var(--primary-color);
+    padding: 8px 15px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 500;
     transition: var(--transition);
 }
 
-.skill-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-.skill-icon {
-    font-size: 2rem;
-    color: var(--primary-color);
-    margin-bottom: 15px;
-    display: flex;
-    gap: 10px;
-}
-
-.skill-progress {
-    height: 8px;
-    background-color: rgba(67, 97, 238, 0.1);
-    border-radius: 4px;
-    margin-top: 10px;
-    overflow: hidden;
-}
-
-.progress-bar {
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-    border-radius: 4px;
-    width: 0;
-    transition: width 1.5s ease-in-out;
+.skill-tag:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-3px);
 }
 
 /* 프로젝트 섹션 */
@@ -632,10 +611,6 @@ footer {
 
     .hero-content h1 {
         font-size: 2.8rem;
-    }
-
-    .skills-grid {
-        grid-template-columns: 1fr;
     }
 }
 
