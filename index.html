@@ -20,9 +20,14 @@
     <!-- AOS 라이브러리 -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- CSS -->
-    <link rel="stylesheet" href="styles.css?v=1.5">
+    <link rel="stylesheet" href="styles.css?v=1.6">
 </head>
 <body>
+    <!-- 스크롤 프로그레스 바 -->
+    <div class="scroll-progress-container">
+        <div class="scroll-progress-bar" id="scrollProgress"></div>
+    </div>
+
     <!-- 헤더 -->
     <header>
         <div class="container header-inner">
@@ -31,9 +36,10 @@
                 <i class="fas fa-bars"></i>
             </button>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="#hero">홈</a></li>
-                <li><a href="#about">소개</a></li>
-                <li><a href="#projects">프로젝트</a></li>
+                <li><a href="#hero" class="nav-link">홈</a></li>
+                <li><a href="#about" class="nav-link">소개</a></li>
+                <li><a href="#projects" class="nav-link">프로젝트</a></li>
+                <li><a href="#3d-section" class="nav-link">3D 모델</a></li>
             </ul>
         </div>
     </header>
@@ -47,6 +53,7 @@
             <li><a href="#hero" class="nav-link">홈</a></li>
             <li><a href="#about" class="nav-link">소개</a></li>
             <li><a href="#projects" class="nav-link">프로젝트</a></li>
+            <li><a href="#3d-section" class="nav-link">3D 모델</a></li>
         </ul>
     </div>
 
@@ -66,14 +73,15 @@
                 </div>
             </div>
         </div>
+        <div class="hero-particles" id="heroParticles"></div>
     </section>
 
     <!-- 소개 섹션 -->
     <section id="about">
         <div class="container">
-            <h2>소개</h2>
+            <h2 data-parallax="true" data-parallax-speed="0.2">소개</h2>
             <div class="about-content">
-                <div class="about-text">
+                <div class="about-text" data-parallax="true" data-parallax-speed="0.1">
                     <h3>배재현입니다</h3>
                     <p>프로그래밍에 열정을 가진 배재현입니다. 깔끔하고 효율적인 코드 작성에 집중합니다.</p>
                     <p>새로운 기술을 배우는 것을 좋아하며, 문제 해결을 위해서 끊임없이 탐구합니다.</p>
@@ -89,7 +97,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="about-image">
+                <div class="about-image" data-parallax="true" data-parallax-speed="0.15">
                     <div class="image-wrapper">
                         <div class="floating-shape shape-1"></div>
                         <div class="floating-shape shape-2"></div>
@@ -104,10 +112,10 @@
     <!-- 프로젝트 섹션 -->
     <section id="projects">
         <div class="container">
-            <h2>Projects</h2>
+            <h2 data-parallax="true" data-parallax-speed="0.2">Projects</h2>
             <div class="projects-grid">
                 <!-- 프로젝트 1 -->
-                <div class="project-card">
+                <div class="project-card" data-parallax="true" data-parallax-speed="0.05">
                     <div class="project-image">
                         <div class="project-overlay"></div>
                         <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="프로젝트 1">
@@ -125,7 +133,7 @@
                 </div>
 
                 <!-- 프로젝트 2 -->
-                <div class="project-card">
+                <div class="project-card" data-parallax="true" data-parallax-speed="0.1">
                     <div class="project-image">
                         <div class="project-overlay"></div>
                         <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="프로젝트 2">
@@ -143,7 +151,7 @@
                 </div>
 
                 <!-- 프로젝트 3 -->
-                <div class="project-card">
+                <div class="project-card" data-parallax="true" data-parallax-speed="0.15">
                     <div class="project-image">
                         <div class="project-overlay"></div>
                         <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="프로젝트 3">
@@ -161,6 +169,15 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- 3D 섹션 -->
+    <section id="3d-section">
+        <div class="container">
+            <h2 data-parallax="true" data-parallax-speed="0.2">3D 모델링</h2>
+            <p class="text-center mb-40">Three.js를 활용한 인터랙티브 3D 모델링</p>
+            <div class="three-container" id="threeContainer"></div>
         </div>
     </section>
 
@@ -191,8 +208,13 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
     <!-- 메인 JavaScript -->
-    <script src="main.js?v=1.5"></script>
+    <script src="main.js?v=1.6"></script>
 </body>
 </html>
+
