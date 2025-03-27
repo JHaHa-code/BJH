@@ -1,19 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("📢 DOM이 완전히 로드되었습니다.");
-
-    // Lottie 로딩 애니메이션
-    let animation = lottie.loadAnimation({
-        container: document.getElementById('lottie-loader'),
-        renderer: 'svg',
-        loop: true,
-        autoplay: true,
-        path: 'https://assets10.lottiefiles.com/packages/lf20_p6qmxqhr.json' // 원하는 JSON URL
-    });
-
     setTimeout(() => {
-        document.getElementById('lottie-loader').style.display = "none";
-    }, 3000);
-
+        document.getElementById('loading-screen').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('loading-screen').style.display = 'none';
+        }, 500); // 0.5초 후 완전히 숨김
+    }, 2000); // 2초 동안 유지
+});
     // 타이핑 효과
     try {
         if (document.querySelector('.typing-text')) {
