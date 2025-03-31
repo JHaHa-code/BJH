@@ -20,7 +20,7 @@
     <!-- AOS 라이브러리 -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- CSS -->
-    <link rel="stylesheet" href="styles.css?v=1.6">
+    <link rel="stylesheet" href="styles.css?v=1.7">
 </head>
 <body>
     <!-- 스크롤 프로그레스 바 -->
@@ -39,7 +39,6 @@
                 <li><a href="#hero" class="nav-link">홈</a></li>
                 <li><a href="#about" class="nav-link">소개</a></li>
                 <li><a href="#projects" class="nav-link">프로젝트</a></li>
-                <li><a href="#3d-section" class="nav-link">3D 모델</a></li>
             </ul>
         </div>
     </header>
@@ -53,7 +52,6 @@
             <li><a href="#hero" class="nav-link">홈</a></li>
             <li><a href="#about" class="nav-link">소개</a></li>
             <li><a href="#projects" class="nav-link">프로젝트</a></li>
-            <li><a href="#3d-section" class="nav-link">3D 모델</a></li>
         </ul>
     </div>
 
@@ -80,29 +78,84 @@
     <section id="about">
         <div class="container">
             <h2 data-parallax="true" data-parallax-speed="0.2">소개</h2>
-            <div class="about-content">
-                <div class="about-text" data-parallax="true" data-parallax-speed="0.1">
-                    <h3>배재현입니다</h3>
-                    <p>프로그래밍에 열정을 가진 배재현입니다. 깔끔하고 효율적인 코드 작성에 집중합니다.</p>
-                    <p>새로운 기술을 배우는 것을 좋아하며, 문제 해결을 위해서 끊임없이 탐구합니다.</p>
-                    
-                    <div class="skills-section">
-                        <h4>기술 스택</h4>
-                        <div class="skills-tags">
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">HTML/CSS/JavaScript</span>
-                            <span class="skill-tag">Flutter</span>
-                            <span class="skill-tag">Java</span>
-                            <span class="skill-tag">Linux Shell</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-image" data-parallax="true" data-parallax-speed="0.15">
-                    <div class="image-wrapper">
+            
+            <div class="about-grid">
+                <!-- 프로필 이미지와 기본 정보 -->
+                <div class="about-profile" data-parallax="true" data-parallax-speed="0.15">
+                    <div class="profile-image-container">
                         <div class="floating-shape shape-1"></div>
                         <div class="floating-shape shape-2"></div>
                         <div class="floating-shape shape-3"></div>
-                        <div class="main-image"></div>
+                        <div class="profile-image"></div>
+                    </div>
+                    <div class="profile-info">
+                        <h3>배재현</h3>
+                        <p class="profile-title">프로그래머 | 개발자</p>
+                        <div class="profile-contacts">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>bjhcoding@naver.com</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>010-8430-0753</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fab fa-github"></i>
+                                <a href="https://github.com/JHaHa-code" target="_blank">JHaHa-code</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 자기소개와 기술 스택 -->
+                <div class="about-content-wrapper">
+                    <div class="about-text" data-parallax="true" data-parallax-speed="0.1">
+                        <div class="about-description">
+                            <h4>About Me</h4>
+                            <p>프로그래밍에 열정을 가진 배재현입니다. 깔끔하고 효율적인 코드 작성에 집중합니다.</p>
+                            <p>새로운 기술을 배우는 것을 좋아하며, 문제 해결을 위해서 끊임없이 탐구합니다.</p>
+                            <p>사용자 경험을 중요시하며, 최신 기술 동향을 꾸준히 파악하고 있습니다.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="about-skills" data-parallax="true" data-parallax-speed="0.12">
+                        <h4>기술 스택</h4>
+                        <div class="skills-categories">
+                            <div class="skill-category">
+                                <h5><i class="fas fa-code"></i> 프로그래밍 언어</h5>
+                                <div class="skills-tags">
+                                    <span class="skill-tag">Python</span>
+                                    <span class="skill-tag">Java</span>
+                                    <span class="skill-tag">JavaScript</span>
+                                    <span class="skill-tag">C</span>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-category">
+                                <h5><i class="fas fa-laptop-code"></i> 웹 개발</h5>
+                                <div class="skills-tags">
+                                    <span class="skill-tag">HTML/CSS</span>
+                                    <span class="skill-tag">React</span>
+                                    <span class="skill-tag">Vue.js</span>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-category">
+                                <h5><i class="fas fa-mobile-alt"></i> 모바일 개발</h5>
+                                <div class="skills-tags">
+                                    <span class="skill-tag">Flutter</span>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-category">
+                                <h5><i class="fas fa-terminal"></i> 기타</h5>
+                                <div class="skills-tags">
+                                    <span class="skill-tag">Linux Shell</span>
+                                    <span class="skill-tag">Git</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -157,27 +210,17 @@
                         <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="프로젝트 3">
                     </div>
                     <div class="project-info">
-                        <h3>헬스케어 대시보드</h3>
+                        <h3>스미싱 역추적 프로젝트</h3>
                         <div class="project-tech">
-                            <span class="tech">Angular</span>
-                            <span class="tech">D3.js</span>
                             <span class="tech">Python</span>
-                            <span class="tech">Flask</span>
+                            <span class="tech">Network Analysis</span>
+                            <span class="tech">Security</span>
                         </div>
-                        <p>의료 데이터를 시각화하는 대시보드 시스템. 복잡한 환자 데이터를 이해하기 쉬운 차트와 그래프로 변환하여 의사 결정을 지원합니다.</p>
+                        <p>악성앱을 설치하게 하여 좀비폰을 만드는 스미싱 문자를 역추적하여 메인 사이트와 IP 그리고 인프라를 분석하는 프로젝트입니다.</p>
                         <a href="#" class="btn">자세히 보기</a>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- 3D 섹션 -->
-    <section id="3d-section">
-        <div class="container">
-            <h2 data-parallax="true" data-parallax-speed="0.2">3D 모델링</h2>
-            <p class="text-center mb-40">Three.js를 활용한 인터랙티브 3D 모델링</p>
-            <div class="three-container" id="threeContainer"></div>
         </div>
     </section>
 
@@ -186,7 +229,12 @@
         <div class="container">
             <div class="footer-content">
                 <a href="#" class="logo">BJH</a>
-                <p class="copyright">© 2025 BAE JAE HYUN, All right reserved..</p>
+                <div class="contact-info">
+                    <p>연락처: 010-8430-0753</p>
+                    <p>이메일: bjhcoding@naver.com</p>
+                    <p>GitHub: <a href="https://github.com/JHaHa-code" target="_blank">JHaHa-code</a></p>
+                </div>
+                <p class="copyright">© 2025 BAE JAE HYUN, All right reserved.</p>
                 <p class="visitor-count">방문자 수: <span id="visitorCount">0</span></p>
             </div>
         </div>
@@ -208,13 +256,9 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
     <!-- 메인 JavaScript -->
-    <script src="main.js?v=1.6"></script>
+    <script src="main.js?v=1.7"></script>
 </body>
 </html>
-
