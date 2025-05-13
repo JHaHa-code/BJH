@@ -12,15 +12,11 @@
         frame-src 'none'
     ">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <title>개발자 포트폴리오 | 배재현</title>
-    <!-- 폰트 -->
+    <title>포트폴리오 | 배재현</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <!-- 아이콘 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- AOS 라이브러리 -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <!-- CSS -->
-    <link rel="stylesheet" href="styles.css?v=1.7">
+    <link rel="stylesheet" href="styles.css?v=1.8">
 </head>
 <body>
     <!-- 스크롤 프로그레스 바 -->
@@ -39,6 +35,7 @@
                 <li><a href="#hero" class="nav-link">홈</a></li>
                 <li><a href="#about" class="nav-link">소개</a></li>
                 <li><a href="#projects" class="nav-link">프로젝트</a></li>
+                <li><a href="#certifications" class="nav-link">자격증</a></li>
             </ul>
         </div>
     </header>
@@ -52,12 +49,14 @@
             <li><a href="#hero" class="nav-link">홈</a></li>
             <li><a href="#about" class="nav-link">소개</a></li>
             <li><a href="#projects" class="nav-link">프로젝트</a></li>
+            <li><a href="#certifications" class="nav-link">자격증</a></li>
         </ul>
     </div>
 
     <!-- 히어로 섹션 -->
-    <section id="hero">
-        <div class="parallax-bg"></div>
+    <section id="hero" class="snap-section">
+        <div class="parallax-bg" data-parallax-layer="1"></div>
+        <div class="parallax-bg secondary" data-parallax-layer="2"></div>
         <div class="container">
             <div class="hero-content">
                 <h1>안녕하세요, <span class="typing-text"></span></h1>
@@ -75,13 +74,11 @@
     </section>
 
     <!-- 소개 섹션 -->
-    <section id="about">
+    <section id="about" class="snap-section">
         <div class="container">
             <h2 data-parallax="true" data-parallax-speed="0.2">소개</h2>
-            
             <div class="about-grid">
-                <!-- 프로필 이미지와 기본 정보 -->
-                <div class="about-profile" data-parallax="true" data-parallax-speed="0.15">
+                <div class="about-profile glassmorphic" data-parallax="true" data-parallax-speed="0.15">
                     <div class="profile-image-container">
                         <div class="floating-shape shape-1"></div>
                         <div class="floating-shape shape-2"></div>
@@ -90,7 +87,7 @@
                     </div>
                     <div class="profile-info">
                         <h3>배재현</h3>
-                        <p class="profile-title">프로그래머 | 개발자</p>
+                        <p class="profile-title">학생 | 프로그래머 | 개발자</p>
                         <div class="profile-contacts">
                             <div class="contact-item">
                                 <i class="fas fa-envelope"></i>
@@ -107,10 +104,8 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- 자기소개와 기술 스택 -->
                 <div class="about-content-wrapper">
-                    <div class="about-text" data-parallax="true" data-parallax-speed="0.1">
+                    <div class="about-text glassmorphic" data-parallax="true" data-parallax-speed="0.1">
                         <div class="about-description">
                             <h4>About Me</h4>
                             <p>프로그래밍에 열정을 가진 배재현입니다. 깔끔하고 효율적인 코드 작성에 집중합니다.</p>
@@ -118,8 +113,7 @@
                             <p>사용자 경험을 중요시하며, 최신 기술 동향을 꾸준히 파악하고 있습니다.</p>
                         </div>
                     </div>
-                    
-                    <div class="about-skills" data-parallax="true" data-parallax-speed="0.12">
+                    <div class="about-skills glassmorphic" data-parallax="true" data-parallax-speed="0.12">
                         <h4>기술 스택</h4>
                         <div class="skills-categories">
                             <div class="skill-category">
@@ -131,7 +125,6 @@
                                     <span class="skill-tag">C</span>
                                 </div>
                             </div>
-                            
                             <div class="skill-category">
                                 <h5><i class="fas fa-laptop-code"></i> 웹 개발</h5>
                                 <div class="skills-tags">
@@ -140,14 +133,12 @@
                                     <span class="skill-tag">Vue.js</span>
                                 </div>
                             </div>
-                            
                             <div class="skill-category">
                                 <h5><i class="fas fa-mobile-alt"></i> 모바일 개발</h5>
                                 <div class="skills-tags">
                                     <span class="skill-tag">Flutter</span>
                                 </div>
                             </div>
-                            
                             <div class="skill-category">
                                 <h5><i class="fas fa-terminal"></i> 기타</h5>
                                 <div class="skills-tags">
@@ -163,15 +154,14 @@
     </section>
 
     <!-- 프로젝트 섹션 -->
-    <section id="projects">
+    <section id="projects" class="snap-section">
         <div class="container">
             <h2 data-parallax="true" data-parallax-speed="0.2">Projects</h2>
             <div class="projects-grid">
-                <!-- 프로젝트 1 -->
-                <div class="project-card" data-parallax="true" data-parallax-speed="0.05">
+                <div class="project-card glassmorphic" data-parallax="true" data-parallax-speed="0.05" data-project-id="1">
                     <div class="project-image">
                         <div class="project-overlay"></div>
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="프로젝트 1">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="프로젝트 1">
                     </div>
                     <div class="project-info">
                         <h3>저작권 침해 확인 프로그램</h3>
@@ -180,34 +170,30 @@
                             <span class="tech">PyQt5</span>
                             <span class="tech">PyTorch</span>
                         </div>
-                        <p>원본 문서와 저작권 침해 의심 문서간의 유사성을 대조하여 저작권 침해 여부를 확인합니다.</p>
-                        <a href="#" class="btn">자세히 보기</a>
+                        <p>원본 문서와 저작권 침해 의심 문서 간의 유사성을 PyTorch 기반 AI 모델로 확인합니다.</p>
+                        <button class="btn project-detail-btn" data-project-id="1">자세히 보기</button>
                     </div>
                 </div>
-
-                <!-- 프로젝트 2 -->
-                <div class="project-card" data-parallax="true" data-parallax-speed="0.1">
+                <div class="project-card glassmorphic" data-parallax="true" data-parallax-speed="0.1" data-project-id="2">
                     <div class="project-image">
                         <div class="project-overlay"></div>
-                        <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="프로젝트 2">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1469&q=80" alt="은하 충돌 시뮬레이션">
                     </div>
                     <div class="project-info">
-                        <h3>태스크 관리 앱</h3>
+                        <h3>은하 충돌 시뮬레이션</h3>
                         <div class="project-tech">
-                            <span class="tech">Vue.js</span>
-                            <span class="tech">Firebase</span>
-                            <span class="tech">Vuex</span>
+                            <span class="tech">Python</span>
+                            <span class="tech">NumPy</span>
+                            <span class="tech">Matplotlib</span>
                         </div>
-                        <p>팀 협업을 위한 직관적인 태스크 관리 애플리케이션. 실시간 업데이트, 드래그 앤 드롭 인터페이스, 사용자 친화적인 디자인을 특징으로 합니다.</p>
-                        <a href="#" class="btn">자세히 보기</a>
+                        <p>두 은하의 충돌을 물리 기반 모델로 시뮬레이션하여 궤적과 병합 과정을 시각화합니다.</p>
+                        <button class="btn project-detail-btn" data-project-id="2">자세히 보기</button>
                     </div>
                 </div>
-
-                <!-- 프로젝트 3 -->
-                <div class="project-card" data-parallax="true" data-parallax-speed="0.15">
+                <div class="project-card glassmorphic" data-parallax="true" data-parallax-speed="0.15" data-project-id="3">
                     <div class="project-image">
                         <div class="project-overlay"></div>
-                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="프로젝트 3">
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="프로젝트 3">
                     </div>
                     <div class="project-info">
                         <h3>스미싱 역추적 프로젝트</h3>
@@ -216,16 +202,37 @@
                             <span class="tech">Network Analysis</span>
                             <span class="tech">Security</span>
                         </div>
-                        <p>악성앱을 설치하게 하여 좀비폰을 만드는 스미싱 문자를 역추적하여 메인 사이트와 IP 그리고 인프라를 분석하는 프로젝트입니다.</p>
-                        <a href="#" class="btn">자세히 보기</a>
+                        <p>스미싱 문자의 인프라를 역추적하여 C&C 서버와 다운로드 서버를 분석합니다.</p>
+                        <button class="btn project-detail-btn" data-project-id="3">자세히 보기</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- 자격증 섹션 -->
+    <section id="certifications" class="snap-section">
+        <div class="container">
+            <h2 data-parallax="true" data-parallax-speed="0.2">자격증 및 수료증</h2>
+            <div class="certifications-grid">
+                <div class="certification-card glassmorphic" data-parallax="true" data-parallax-speed="0.1">
+                    <h3>COS PRO Python 3급</h3>
+                    <p><strong>발급일:</strong> 2024.06.26</p>
+                    <p><strong>자격증 번호:</strong> 24_P3_XXXXXXX (보안상 마스킹)</p>
+                    <p>Coding Specialist Professional Python 3급 자격증으로, Python 프로그래밍 능력을 인증합니다.</p>
+                </div>
+                <div class="certification-card glassmorphic" data-parallax="true" data-parallax-speed="0.15">
+                    <h3>2025 AI팀프로젝트 슈퍼컴퓨팅 청소년캠프</h3>
+                    <p><strong>수료 기간:</strong> 2025.01.20 ~ 2025.01.24</p>
+                    <p><strong>수료증 번호:</strong> 2025-082</p>
+                    <p>Python을 이용한 병렬프로그래밍 및 AI 전 과정을 4일간 수료한 인증입니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- 푸터 -->
-    <footer>
+    <footer class="snap-section">
         <div class="container">
             <div class="footer-content">
                 <a href="#" class="logo">BJH</a>
@@ -239,6 +246,14 @@
             </div>
         </div>
     </footer>
+
+    <!-- 프로젝트 상세 모달 -->
+    <div class="project-modal" id="projectModal">
+        <div class="project-modal-content glassmorphic">
+            <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+            <div class="project-modal-body" id="projectModalBody"></div>
+        </div>
+    </div>
 
     <!-- 다크 모드 토글 버튼 -->
     <button class="theme-toggle" id="themeToggle" title="다크 모드 전환">
@@ -257,8 +272,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
-    <!-- 메인 JavaScript -->
-    <script src="main.js?v=1.7"></script>
+    <script src="main.js?v=1.8"></script>
 </body>
 </html>
