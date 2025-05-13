@@ -35,7 +35,11 @@
 html,
 body {
   max-width: 100%;
+  height: 100%;
   overflow-x: hidden;
+  overflow-y: auto; /* 명시적 스크롤 허용 */
+  touch-action: pan-y; /* 세로 스크롤만 허용 */
+  -webkit-overflow-scrolling: touch; /* iOS 부드러운 스크롤 */
   scroll-behavior: smooth;
   scroll-snap-type: y mandatory;
 }
@@ -100,6 +104,7 @@ section {
   min-height: 100vh;
   scroll-snap-align: start;
   transition: opacity 0.6s ease, transform 0.6s ease;
+  will-change: transform, opacity; /* 렌더링 최적화 */
 }
 
 section.hidden {
@@ -742,6 +747,8 @@ header {
 .project-modal.active {
   display: flex;
   opacity: 1;
+  overflow-y: auto; /* 모달 내 스크롤 허용 */
+  touch-action: auto;
 }
 
 .project-modal-content {
@@ -902,6 +909,7 @@ footer {
 
   section {
     padding: 80px 0;
+    scroll-snap-align: none; /* 모바일 스크롤 스냅 비활성화 */
   }
 
   h2 {
