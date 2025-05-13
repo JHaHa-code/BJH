@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (closeNav && fullscreenNav) {
     closeNav.addEventListener("click", () => {
       fullscreenNav.classList.remove("active");
-      document.body.style.overflow = "";
+      document.body.style.overflow = ""; // overflow 복원
     });
   }
 
@@ -172,17 +172,16 @@ document.addEventListener("DOMContentLoaded", () => {
       `,
     },
     2: {
-      title: "태스크 관리 앱",
-      technologies: ["Vue.js", "Firebase", "Vuex"],
+      title: "은하 충돌 시뮬레이션",
+      technologies: ["Python", "NumPy", "Matplotlib"],
       description: `
-        <p>팀 협업을 위한 직관적인 태스크 관리 애플리케이션입니다.</p>
+        <p>4차 Runge-Kutta 수치적분법을 활용한 Python 기반 은하 충돌 시뮬레이션입니다. 두 은하의 중심핵이 중력으로 끌어당기며, 케플러 운동을 하는 별들이 충돌 과정에서 물방울 모양으로 퍼지는 현상을 재현했습니다.</p>
         <p><strong>주요 기능:</strong></p>
         <ul>
-          <li>실시간 태스크 업데이트</li>
-          <li>드래그 앤 드롭 인터페이스</li>
-          <li>Firebase를 이용한 데이터 동기화</li>
+          <li>중력 상호작용 모델링</li>
+          <li>케플러 운동 기반 궤적 계산</li>
+          <li>Matplotlib으로 물방울 형태의 별 분포 시각화</li>
         </ul>
-        <p>사용자 친화적인 디자인과 실시간 협업 기능을 제공합니다.</p>
       `,
     },
     3: {
@@ -205,29 +204,38 @@ document.addEventListener("DOMContentLoaded", () => {
   projectDetailButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const projectId = button.getAttribute("data-project-id");
+      console.log("Opening project:", projectId); // 디버깅 로그
       const project = projectDetails[projectId];
-      projectModalBody.innerHTML = `
-        <h2>${project.title}</h2>
-        <div class="project-tech">
-          ${project.technologies.map((tech) => `<span class="tech">${tech}</span>`).join("")}
-        </div>
-        ${project.description}
-      `;
-      projectModal.classList.add("active");
-      document.body.style.overflow = "hidden";
+      if (project) {
+        projectModalBody.innerHTML = `
+          <h2>${project.title}</h2>
+          <div class="project-tech">
+            ${project.technologies.map((tech) => `<span class="tech">${tech}</span>`).join("")}
+          </div>
+          ${project.description}
+        `;
+        projectModal.classList.add("active");
+        document.body.style.overflow = "hidden";
+      } else {
+        console.error(`Project ID ${projectId} not found`);
+      }
     });
   });
 
   if (modalClose) {
     modalClose.addEventListener("click", () => {
       projectModal.classList.remove("active");
-      document.body.style.overflow = "";
+      document.body.style.overflow = ""; // overflow 복원
     });
   }
 
   // GSAP 애니메이션
   if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.normalizeScroll(true); // 모바일 스크롤 정규화
+    ScrollTrigger.config({
+      ignoreMobileResize: true, // 모바일 리사이즈 이벤트 무시
+    });
 
     // 섹션 전환 애니메이션
     gsap.utils.toArray(".snap-section").forEach((section) => {
@@ -273,6 +281,34 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         delay: i * 0.2,
       });
+    });
+  }
+
+  // 터치 이벤트 디바운싱 (모바일 스크롤 문제 해결)
+  let lastTouchY = 0;
+  document.addEventListener("touchmove", (e) => {
+    const touchY = e.touches[0].clientY;
+    if (Math.abs(touchY - lastTouchY) < 10) {
+      e.preventDefault(); // 작은 움직임 무시
+    }
+    lastTouchY = touchY;
+  }, { passive: false });
+
+  // IntersectionObserver로 섹션 로드 최적화
+  const sections = document.querySelectorAll(".snap-section");
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      }
+    });
+  }, { threshold: 0.1 });
+  sections.forEach(section => observer.observe(section));
+
+  // 모바일에서 스크롤 스냅 비활성화
+  if (window.innerWidth <= 768) {
+    document.querySelectorAll(".snap-section").forEach(section => {
+      section.style.scrollSnapAlign = "none";
     });
   }
 });
